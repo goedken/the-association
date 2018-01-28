@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Players</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!--<ion-list>-->
+    <!--<ion-item-sliding *ngFor="let player of players | async">-->
+      <!--<ion-item (click)="goToPlayer(player.id)">-->
+        <!--{{ player.display_first_last }}-->
+      <!--</ion-item>-->
+    <!--</ion-item-sliding>-->
+  <!--</ion-list>-->
+  <ion-list>
+    <ion-item *ngFor="let player of players" (click)="goToPlayer(player)">
+      {{ player.DISPLAY_FIRST_LAST }}
+    </ion-item>
+  </ion-list>
+</ion-content>
