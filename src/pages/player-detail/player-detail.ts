@@ -10,15 +10,22 @@ import { Observable } from "rxjs/Observable"
 })
 
 export class PlayerDetailComponent {
-  public player;
+  public playerInfo;
   public playerData;
+  public loadingPlayerData = true;
 
   constructor(private navParams: NavParams, public playerService: PlayerService) {
-    this.player = this.navParams.get("player");
-    this.playerService.getPlayer(this.player.PERSON_ID).subscribe(
-      data => { console.log(data); this.playerData = data },
+    this.playerInfo = this.navParams.get("player");
+    console.log(this.playerInfo);
+    this.playerService.getPlayer(this.playerInfo.PERSON_ID).subscribe(
+      data => {
+        this.playerData = data[0];
+        console.log(this.playerData);
+      },
       err => console.error(err),
-      () => console.log('done loading player')
+      () => {
+        this.loadingPlayerData = false;
+      }
     );
   }
 
