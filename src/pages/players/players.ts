@@ -11,12 +11,20 @@ import { PlayerService } from "../../services/player-service";
 })
 export class PlayersComponent {
   public players;
+  public filteredPlayers;
+  public loading = true;
+  public searchText = '';
 
   constructor(public navCtrl: NavController, public playerService: PlayerService) {
     this.playerService.getPlayers().subscribe(
-      data => { this.players = data },
+      data => {
+        this.players = data;
+        this.filteredPlayers = data;
+      },
       err => console.error(err),
-      () => console.log('done loading players')
+      () => {
+        this.loading = false;
+      }
     );
   }
 
@@ -24,11 +32,10 @@ export class PlayersComponent {
     this.navCtrl.push(PlayerDetailComponent, {"player" : player})
   }
 
-  // filterItems(searchTerm){
-  //   return this.players.filter((item) => {
-  //     return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
-  //   });
-  //
-  // }
+  filterPlayers(searchTerm){
+    this.filteredPlayers = this.players.filter((player) => {
+      return player.DISPLAY_FIRST_LAST.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    });
+  }
 
 }

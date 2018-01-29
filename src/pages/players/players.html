@@ -8,16 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <!--<ion-list>-->
-    <!--<ion-item-sliding *ngFor="let player of players | async">-->
-      <!--<ion-item (click)="goToPlayer(player.id)">-->
-        <!--{{ player.display_first_last }}-->
-      <!--</ion-item>-->
-    <!--</ion-item-sliding>-->
-  <!--</ion-list>-->
-  <ion-list>
-    <ion-item *ngFor="let player of players" (click)="goToPlayer(player)">
-      {{ player.DISPLAY_FIRST_LAST }}
-    </ion-item>
-  </ion-list>
+  <div text-center margin-top *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  <div *ngIf="!loading">
+    <ion-searchbar [(ngModel)]="searchText"
+                   (ionInput)="filterPlayers(searchText)">
+    </ion-searchbar>
+    <ion-list *ngIf="!loading">
+      <ion-item *ngFor="let player of filteredPlayers" (click)="goToPlayer(player)">
+        {{ player.DISPLAY_LAST_COMMA_FIRST }}
+        <span item-end>{{ player.TEAM_ABBREVIATION }}</span>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
